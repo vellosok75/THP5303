@@ -63,7 +63,7 @@ where $\text{ORM}_{\pm \delta}$ corresponds to the ORM measured at energy deviat
 \begin{equation}
     \text{ORM}_{ij} = \frac{\Delta u_i}{\Delta \theta_j},
 \end{equation}
-with $\vb{u} = \mqty[\vb{x} & \vb{y}]^\intercal$ and $\Delta \boldsymbol{\theta} = \mqty[\boldsymbol{\theta}_x & \boldsymbol{\theta}_x]^\intercal$. 
+with $\vb{u} = \mqty[\vb{x} & \vb{y}]^\intercal$ and $\Delta \boldsymbol{\theta} = \mqty[\boldsymbol{\theta}_x & \boldsymbol{\theta}_y]^\intercal$. 
 At SIRIUS, like the ORM, the OEORM is a $320 \times 281$ matrix, with the dispersive orbit response as the last column.
 % where the 160 top/bottom rows correspond to horizontal/vertical BPMs and the 281 columns correspond to the orbit signatures of the 120 horizontal correctors (CH), 160 vertical correctors (CV) and 1 RF (dispersion) column. 
 % Figure~\ref{fig:oeorm_cols} shows
@@ -85,9 +85,9 @@ At SIRIUS, like the ORM, the OEORM is a $320 \times 281$ matrix, with the disper
 % The SIRIUS storage ring consists on a 20-cell five-bend-achromat (5BA) lattice comprising a 5-fold symmetric configuration with alternating high- and low- horizontal betatron functions.
 %A superperiod consists of one high-beta and 3 low-beta sections arranged as A-B-P-B. 
 %The B and P low-beta sections have identical first order optics, but their sextupoles are different. 
-Regarding SIRIUS sxtupole lattice, there are 6 achromatic sextupole families in the straight sections
+Regarding SIRIUS sextupole lattice, there are 6 achromatic sextupole families in the straight sections
 % SFA0, SDA0, SFB0, SDB0, SDP0, SFP0 
-and 15 chromatic families in the arcs.
+and 15 chromatic families in the arcs~\cite{liu_sirius_2014}.
 %SDA1, SFA1, SDA2, SFA2, SDA3, SDB1, SFB1, SDB2, SFB2, SDB3, SFP1, SDP1, SFP2, SDP2, SDP3. 
 The NOECO scheme purports to calibrate the chromatic lattice only.
 
@@ -95,7 +95,7 @@ The NOECO scheme purports to calibrate the chromatic lattice only.
 
 OEORM measurements at the SIRIUS storage ring are carried out according to the following procedure. Energy deviations of $\delta=\pm 0.5 \times 10^{-2}, \pm 0.25 \times 10^{-2}$ are introduced into the beam by adjusting the RF master oscillator frequency around the nominal operating frequency $f_0$. The required frequency shifts $\Delta f$ are calculated as $\Delta f = -\alpha f_0 \delta$, where $\delta$ is the desired energy shift and $\alpha = 1.636\times10^{-4}$ is the lattice momentum compaction factor at $\delta=0$.
 
-At each energy offset, a fast ORM measurement (``AC'' measurement) \cite{velloso:ipac2022-mopotk002} is performed. Using the ORMs measured over the energy shift range together with the ORM at $\delta=0$, the data are fitted with a linear model of ORM versus energy deviation. The OEORM corresponds to the angular coefficient of the fit.
+At each energy offset, a fast ``AC'' ORM measurement~\cite{velloso:ipac2022-mopotk002} is performed. Using the ORMs measured over the energy shift range together with the ORM at $\delta=0$, the data are fitted with a linear model of ORM versus energy deviation. The OEORM corresponds to the angular coefficient of the fit.
 
 \section{The fitting setup}
 %NOECO aims to match model and machine OEORMs in a least-squares sense.
@@ -176,7 +176,7 @@ The Jacobian columns corresponding to the sextupole knobs are calculated numeric
 
 %\subsection{Regularizations}
 The LM constant $\lambda$ is updated adaptively depending on whether $\chi^2$ improves or worsens. Additional Tikhonov/Ridge regularization of the form $\chi^2 \to \chi^2 + \|W^\intercal \Delta \vb{P}\|^2$, with $W = \alpha I_{15}$, is applied to mitigate degeneracies and prevent excessive excursions of the sextupole strengths.
-With the regularization, the normal equation reads $\Delta \vb{P}^{(n)} = - A^{-1} J^\intercal \vb{r}^{(n-1)}$, where matrix $A$ reads
+With the regularization, the normal equation reads $\Delta \vb{P}^{(n)} = - A^{-1} J^\intercal \vb{r}^{(n-1)}$, where 
 \begin{equation}
 A =  J^{\intercal}J  + \lambda \text{diag}(J^{\intercal}J) + W^\intercal W.
 \label{eq:normal_mat}
@@ -190,7 +190,7 @@ A =  J^{\intercal}J  + \lambda \text{diag}(J^{\intercal}J) + W^\intercal W.
 
 \section{Degeneracies and parameters selection}
 
-The pairwise correlations between Jacobian columns $i$ and $j$, defined as $C_{ij} = \frac{J_i \cdot J_j}{\norm{J_i}\norm{J_j}}$ and shown in Fig.~\ref{fig:jac_corr}, highlight strong collinearities among the family signatures, particularly within a highly correlated cluster formed by the focusing sextupole families. This indicates that several knobs produce similar signatures in the off-energy orbit responses, limiting the identifiability of individual knobs and potentially leading to an ill-posed optimization problem. 
+The pairwise correlations between Jacobian columns $i$ and $j$, defined as $C_{ij} = \frac{J_i \cdot J_j}{\norm{J_i}\norm{J_j}}$ and shown in Fig.~\ref{fig:jac_corr}, highlight strong co-linearities among the family signatures, particularly within a highly correlated cluster formed by the focusing sextupole families. This indicates that several knobs produce similar signatures in the off-energy orbit responses, limiting the identifiability of individual knobs and potentially leading to an ill-posed optimization problem. 
 
 The singular value decomposition of the matrix $A$ from Eq.~\eqref{eq:normal_mat} reveals a condition number of $10^{6}$, which can be improved through an appropriate choice of the LM parameter $\lambda$ and the Tikhonov regularization parameter $\alpha$. In our tests, the values $\lambda=10^{-3}$ and $\alpha=10^{2}$ raised the singular value spectrum, improved the conditioning, attenuated degeneracies and still provided an acceptable convergence time of approximately 10 iterations.
 
@@ -202,8 +202,8 @@ Our initial test of the NOECO scheme consisted on benchmarking the method's abil
 
 \begin{figure*}[!h]
     \centering
-    \includegraphics[width=\linewidth]{THP5303_f2.pdf}
-    \caption{History of objective function throughout the optimization (left) and relative variations with respect to nominal model strengths required to explain measured OEORMs (right). Black curve corresponds to control system sextupole strengths.} 
+    \includegraphics[width=\linewidth]{THP5303_f2_.pdf}
+    \caption{History of objective function throughout the optimization for machine measured data (a) and model data (c). Relative sextupole strengths variations with respect to nominal model strengths required to explain measured OEORMs (b) and simulated OEORMs (d). Black curve corresponds to control system sextupole strengths.} 
     \label{fig:fit_strengths}
 \end{figure*}
 
@@ -240,13 +240,13 @@ Overall, the results indicate that OEORM-based calibration may be feasible at SI
     \textquotedblleft{Nonlinear optics from off-energy closed orbits}\textquotedblright,
     \emph{Physical Review Accelerators and Beams}, vol. 23, p. 102803, 2020.
     \url{doi:10.1103/PhysRevAccelBeams.23.102803}
-    
-    \bibitem{PhysRevAccelBeams.26.032803}
-    D. Vilsmeier, R. Singh, M. Bai,
-    \textquotedblleft{Inverse modeling of circular lattices via orbit response measurements in the presence of degeneracy}\textquotedblright,
-    \emph{Phys. Rev. Accel. Beams}, vol. 26, p. 032803, Mar. 2023.
-    \url{doi:10.1103/PhysRevAccelBeams.26.032803}
 
+    \bibitem{liu_sirius_2014}
+    L. Liu, N. Milas, A. H. C. Mukai, X. R. Resende, and F. H. de Sá,
+    \textquotedblleft{The Sirius project}\textquotedblright,
+    \emph{Journal of Synchrotron Radiation}, vol. 21, no. 5, pp. 904--911, Sep. 2014.
+    \url{doi:10.1107/S1600577514011928}
+    
     %\cite{velloso:ipac2022-mopotk002}
     \bibitem{velloso:ipac2022-mopotk002}
     M. M. S. Velloso, M. B. Alves, and F. H. de Sá,
@@ -258,7 +258,12 @@ Overall, the results indicate that OEORM-based calibration may be feasible at SI
     \url{doi:10.18429/JACoW-IPAC2022-MOPOTK002}
     % --- additional material -ISSN/ISBN--
     %  ISBN: 978-3-95450-227-1, ISSN: 2673-5490
-
+    
+    \bibitem{PhysRevAccelBeams.26.032803}
+    D. Vilsmeier, R. Singh, M. Bai,
+    \textquotedblleft{Inverse modeling of circular lattices via orbit response measurements in the presence of degeneracy}\textquotedblright,
+    \emph{Phys. Rev. Accel. Beams}, vol. 26, p. 032803, Mar. 2023.
+    \url{doi:10.1103/PhysRevAccelBeams.26.032803}
     
     \bibitem{huang2019beam}
     X. Huang,

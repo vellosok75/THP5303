@@ -38,7 +38,7 @@
 \title{Application of the Nonlinear optics from off-energy orbits method at the SIRIUS Storage Ring}
 
 
-\author{M.~Velloso\thanks{matheus.velloso@lnls.br}\textsuperscript{1}, L.~Liu, X.~Resende, F.~H.~de Sá, Brazilian Synchrotron Light Laboratory, Campinas, Brazil\\
+\author{M.~M.~S.~Velloso\thanks{matheus.velloso@lnls.br}\textsuperscript{1}, X.~R.~Resende, F.~H.~de Sá, Brazilian Synchrotron Light Laboratory, Campinas, Brazil\\
 \textsuperscript{1}also at Gleb Wataghin Institute of Physics, University of Campinas, Campinas, Brazil
 }
 
@@ -93,9 +93,7 @@ The NOECO scheme purports to calibrate the chromatic lattice only.
 
 \section{OEORM measurements at SIRIUS}
 
-OEORM measurements at the SIRIUS storage ring are carried out according to the following procedure. Energy deviations of $\delta=\pm 0.5 \times 10^{-2}, \pm 0.25 \times 10^{-2}$ are introduced into the beam by adjusting the RF master oscillator frequency around the nominal operating frequency $f_0$. The required frequency shifts $\Delta f$ are calculated as $\Delta f = -\alpha f_0 \delta$, where $\delta$ is the desired energy shift and $\alpha = 1.636\times10^{-4}$ is the lattice momentum compaction factor at $\delta=0$.
-
-At each energy offset, a fast ``AC'' ORM measurement~\cite{velloso:ipac2022-mopotk002} is performed. Using the ORMs measured over the energy shift range together with the ORM at $\delta=0$, the data are fitted with a linear model of ORM versus energy deviation. The OEORM corresponds to the angular coefficient of the fit.
+OEORM measurements at the SIRIUS storage ring are carried out according to the following procedure. Energy deviations of $\delta=\pm 0.5 \%, \pm 0.25 \%$ are introduced into the beam by adjusting the RF master oscillator frequency around the nominal operating frequency $f_0$. The required frequency shifts $\Delta f$ are calculated as $\Delta f = -\alpha f_0 \delta$, where $\delta$ is the desired energy shift and $\alpha = 1.636\times10^{-4}$ is the lattice momentum compaction factor at $\delta=0$. At each energy offset, a fast ``AC'' ORM measurement~\cite{velloso:ipac2022-mopotk002} is performed. Using the ORMs measured over the energy shift range together with the ORM at $\delta=0$, the data are fitted with a linear model of ORM versus energy deviation. The OEORM corresponds to the angular coefficient of the fit.
 
 \section{The fitting setup}
 %NOECO aims to match model and machine OEORMs in a least-squares sense.
@@ -103,7 +101,7 @@ The objective function to be minimized is
 \begin{equation}
 \chi^{2} = \sum\limits_{ij}\frac{|\text{OEORM}_{ij}^{\text{meas}} - \text{OEORM}_{ij}^{\text{model}}|^2}{w^2_{ij}},
 \end{equation}
-where $\text{OEORM}^{\text{meas}}$ is the measured OEORM and $\text{OEORM}^{\text{model}}$ the model prediction. The weights $w_{ij}$ represent the OEORM experimental noise, 
+where $\text{OEORM}^{\text{meas}}$ is the measured OEORM and $\text{OEORM}^{\text{model}}$ the model prediction. The weights $w_{ij}$ represent the OEORM experimental noise.
 % as propagated from eq.~\eqref{eq:oeorm_def}:
 % $w_{ij} = \frac{\sigma_{i}}{\theta_j\delta}$;
 % with $\sigma_i$ being the noise of the $i$-th BPM and $\theta_j$ the kick amplitude of the $j$-th steerer. 
@@ -141,7 +139,6 @@ with dimensions $15 + (120 + 160) + (2\times 160) =  615$.
 Off-diagonal elements of the OEORM are not considered in the fitting, eliminating the need of couplings among the horizontal and vertical BPMs signals as additional parameters. 
 % gains obtained from a previous LOCO fitting can be used, reducing the free parameters to the chromatic sextupole lattice only.
 %Our best results were attained in this manner, so we focus on sextupoles fitting from now on.
-
 % \begin{figure*}[!h]
 %     \centering
 %     \includegraphics*[width=0.95\textwidth]{jacobian_svd_modes.pdf}
@@ -158,13 +155,12 @@ with $\vb{r}^{(n)}$ being the residuals vector at the $n$-th iteration. The resi
     \begin{equation}
     r_{k} = \frac{\text{OEORM}_{ij}^{\prime\text{meas}}- \text{OEORM}_{ij}^{\text{model}}}{w_{ij  }},
     \end{equation}
-with $\quad k = 281 i + j, \quad 0\leq i\leq 319, \quad 0\leq j\leq 280$, 
-and $J$ is the Jacobian matrix: 
+with $\quad k = 281 i + j, \quad 0\leq i\leq 319, \quad 0\leq j\leq 280$. $J$ is the Jacobian matrix: 
 \begin{equation}
 J_{kl} = \pdv{r_k}{P_l}.
 \end{equation}
 % In terms of the residual vector, the objective function reads $\chi^2 = \vb{r}^\intercal \vb{r}$. 
-The Jacobian columns corresponding to the sextupole knobs are calculated numerically with OEORM measurement simulations in the model. The columns corresponding to correctors and BPMs gains can be calculated analytically.
+The Jacobian columns corresponding to the sextupole knobs are obtained numerically using OEORM calculations in the model. The columns corresponding to correctors and BPMs gains can be calculated analytically.
 % With the inclusion of Levenberg-Macquardt (LM) and L2 regularizations, equation \eqref{eq:GN} reads
 % \begin{equation}
 % \Delta \vb{P}^{(k)} = - \left[J^{\intercal}J + \lambda \text{diag}(J^{\intercal}J) + \text{diag}(\boldsymbol{\alpha}^\intercal\boldsymbol{\alpha})\right]^{+} J^\intercal \vb{r}^{(k)},
@@ -181,23 +177,22 @@ With the regularization, the normal equation reads $\Delta \vb{P}^{(n)} = - A^{-
 A =  J^{\intercal}J  + \lambda \text{diag}(J^{\intercal}J) + W^\intercal W.
 \label{eq:normal_mat}
 \end{equation}
+\section{Degeneracies and parameters selection}
+The pairwise correlations between Jacobian columns $i$ and $j$, defined as $C_{ij} = \frac{J_i \cdot J_j}{\norm{J_i}\norm{J_j}}$ and shown in Fig.~\ref{fig:jac_corr}, highlight strong co-linearities among the family signatures, particularly within a highly correlated cluster formed by the focusing sextupole families. This indicates that several knobs produce similar signatures in the off-energy orbit responses, limiting the identifiability of individual knobs and potentially leading to an ill-posed optimization problem. 
 \begin{figure}[!]
     \centering
     \includegraphics[width=0.9\linewidth]{THP5303_f1.pdf}
     \caption{Jacobian columns pairwise correlation, or cosine distance. Columns are highly correlated, meaning many sextupole families display similar OEORM signatures.} 
     \label{fig:jac_corr}
 \end{figure}
-
-\section{Degeneracies and parameters selection}
-
-The pairwise correlations between Jacobian columns $i$ and $j$, defined as $C_{ij} = \frac{J_i \cdot J_j}{\norm{J_i}\norm{J_j}}$ and shown in Fig.~\ref{fig:jac_corr}, highlight strong co-linearities among the family signatures, particularly within a highly correlated cluster formed by the focusing sextupole families. This indicates that several knobs produce similar signatures in the off-energy orbit responses, limiting the identifiability of individual knobs and potentially leading to an ill-posed optimization problem. 
-
 The singular value decomposition of the matrix $A$ from Eq.~\eqref{eq:normal_mat} reveals a condition number of $10^{6}$, which can be improved through an appropriate choice of the LM parameter $\lambda$ and the Tikhonov regularization parameter $\alpha$. In our tests, the values $\lambda=10^{-3}$ and $\alpha=10^{2}$ raised the singular value spectrum, improved the conditioning, attenuated degeneracies and still provided an acceptable convergence time of approximately 10 iterations.
 
 \section{Fitting results}
 \subsection{Error identification in the machine}
 % NOECOs ability to fit the nonlinear lattice strengths and reveal deliberately introduced perturbations to a given family strength was tested in the machine model. The OEORM  was calculated for the nominal lattice with a 2\% perturbation on a given family strength. Synthetic noise was added to simulate BPMs reading errors. The LM parameter \(\lambda\) was initialized at \(1\times10^{-3}\) and updated by a factor of 10 each iteration, depending on whether \(\chi^2\) improved or worsened. A fixed Tikhonov regularization of $\alpha=10^{2}$ was applied to sextupole knobs. NOECO correctly identified the point perturbation up to a X precision. 
-Our initial test of the NOECO scheme consisted on benchmarking the method's ability to identify intentionally introduced perturbations. Three OEORMs were measured under three sextupoles strength configurations. The first corresponds to the current operational strengths, defined in 2023 through online optimization of injection efficiency and dynamic aperture~\cite{vellosomatheus_online_2023}. The other two measurements use the same operational settings with additional point perturbations of \(+1\%\) and \(+2\%\) applied to the SDP2 sextupole family. We denote these measurements as OEORM0 (operational), OEORM1 (1\% perturbation), and OEORM2 (2\% perturbation). An ORM measurement at operation strengths sextupoles and nominal energy is used to fit a LOCO model which in turn was used both to calculate the NOECO Jacobian and to perform all OEORM measurement simulations. The NOECO fit free parameters consisted solely of the sextupole family strengths, since BPM and steerer gains were not included in the fit and their values obtained from the LOCO model were used instead. The LM parameter \(\lambda\) was initialized at \(10^{-3}\) and updated by a factor of 10 each iteration, depending on whether \(\chi^2\) improved or worsened. A fixed Tikhonov regularization of $\alpha=10^{2}$ was applied to sextupole knobs.
+Our initial test of the NOECO scheme consisted on benchmarking the method's ability to identify intentionally introduced perturbations. Three OEORMs were measured under three sextupoles strength configurations. The first corresponds to the current operational strengths (OS), defined in 2023 through online optimization of injection efficiency and dynamic aperture~\cite{vellosomatheus_online_2023}. The other two measurements use the same operational settings with additional point perturbations of \(+1\%\) and \(+2\%\) applied to the SDP2 sextupole family. We denote these measurements as OEORM0 (operational), OEORM1 (1\% perturbation), and OEORM2 (2\% perturbation). 
+
+An ORM measurement at operation sextupoles strengths and nominal energy is used to fit a LOCO model which in turn was used both to calculate the NOECO Jacobian and to perform all OEORM evaluations. The NOECO fit free parameters consisted solely of the sextupole family strengths, since BPM and steerer gains were not included in the fit and their values obtained from the LOCO model were used instead. The LM parameter \(\lambda\) was initialized at \(10^{-3}\) and updated by a factor of 10 each iteration, depending on whether \(\chi^2\) improved or worsened. A fixed Tikhonov regularization of $\alpha=10^{2}$ was applied to sextupole knobs.
 % and a singular-value cutoff was applied, excluding modes with \(s_i/s_{\text{max}} < 1\times10^{-4}\) from the pseudo-inverse to handle the dominant BPM/steerer degeneracy. All calibrations used a fixed Jacobian computed from a LOCO-calibrated model with nominal sextupole strengths. Jacobian computation for the SIRIUS model using the pyaccel and trackcpp tracking libraries takes about 2.5 minutes.
 
 \begin{figure*}[!h]
@@ -209,9 +204,7 @@ Our initial test of the NOECO scheme consisted on benchmarking the method's abil
 
 
 % We refer to this as a non-sequential fitting scheme, in contrast to a sequential approach in which OEORM0 is fitted from nominal parameters, OEORM1 is fitted starting from the OEORM0 solution, and OEORM2 from the OEORM1 solution. Tests using both schemes produced identical results, so only the non-sequential case is reported here. 
-Figure~\ref{fig:fit_strengths} shows, on the left, the evolution of \(\chi^2/\text{dof}\) for each measured OEORM, while, on the right, the resulting fitted strengths are shown as relative variations with respect to the model nominal strengths. The blue curves correspond to the fit to the operation strengths, whereas the green and orange curves correspond to the 1\% and 2\% perturbations, respectively. The black curve represents the control system strength readings, which are strength estimates from the magnet excitation curves and the design beam energy.
-
-Although \(\chi^2/\text{dof}\) decreases throughout the minimization, its final value for OEORMs 1 and 2 remains above unity, as values close to one would be expected for a representative model and weithing $w_{ij}$. This may indicate incomplete modeling.
+Figure~\ref{fig:fit_strengths}-a) shows the evolution of \(\chi^2/\text{dof}\) for each OEORM measured, while in Fig.~\ref{fig:fit_strengths}-b) the fitted strengths are shown as relative variations with respect to the model nominal strengths. The blue curves correspond to the fit to the operation strengths, whereas the green and orange curves correspond to the 1\% and 2\% perturbations, respectively. The black curve represents the control system strength readings, which are strength estimates from the magnet excitation curves and the design beam energy. Although \(\chi^2/\text{dof}\) decreases throughout the minimization, its final value for OEORMs 1 and 2 remains above unity, as values close to one would be expected for a representative model and weithing $w_{ij}$. This may indicate incomplete modeling.
 
 The strengths fitted to the operation strengths resemble the control system estimates and yield model chromaticities \((\xi_x, \xi_y) = (3.17, 2.91)\), in reasonable agreement with the measured values of \((3.11, 2.67)\). Without machine measurements of nonlinear-optics functions, however, it is difficult to assess whether the model with NOECO-fitted strengths also reproduce the machine’s nonlinear optics, which would serve as an additional validation of the calibration. The method's ability to fit the nonlinear optics and provide a representative nonlinear lattice model can still be validated with iterative correction or symmetrization, which is an upcoming effort.
 
@@ -219,17 +212,24 @@ Regarding the introduced perturbations, NOECO was not able isolate them within t
 \subsection{Error identification in the model}
 Given the method's difficulty in identifying isolated perturbations, model-based simulations were carried out to assess the extent to which identifiability is feasible. In the tests, when a given machine model is perturbed solely in the sextupole lattice, the NOECO fitting is able to reproduce the perturbed strengths, both for isolated perturbations and for distributed perturbations across all families. However, if additional optics mismatches are present, the correct identification of perturbations is no longer guaranteed. A small perturbation of 0.3\% in a single chromatic quadrupole, introducing a slight tune variation at the third decimal place and a sub-1\% beta-beating, is already sufficient to limit the identifiability of isolated perturbations. This is a typical magnitude of quadrupole gradient variation that is usually left uncorrected in the machine during LOCO optics symmetrization.
 
-These conclusions were drawn from the following simulations. The nominal model is duplicated, and a small quadrupole variation is introduced together with the nonlinear lattice perturbations that are intended to be identified. The OEORM is then calculated for this perturbed model and used as the target OEORM to be reproduced. The nominal, unperturbed model used internally by NOECO to calculate the OEORM of candidate strengths and the Jacobian has its tunes and chromaticities corrected to match those of the perturbed model being fitted. The fit is then performed using the same hyperparameters adopted in the machine OEORM fits.
+% Figure~\ref{fig:fit_strengths}-c) presents the evolution of 
+These conclusions were drawn from the following simulations. In the machine model, a small quadrupole variation is introduced together with the nonlinear lattice perturbations that are intended to be identified. We used the same OS from the control system readings.  The OEORM is then calculated for this perturbed model and used as the target OEORM to be reproduced. The nominal, unperturbed model used internally by NOECO to calculate the OEORM of candidate strengths and the Jacobian has its tunes and chromaticities corrected to match those of the perturbed model being fitted. The fit to the reference strenghs and isolated perturbations to SDP2 are then performed using the same hyperparameters adopted in the machine OEORM fits. 
+
+Figure~\ref{fig:fit_strengths}-d) presents the fitted strengths for the model tests. The reference strengths and the $+1\%$ perturbation are correclty identified, while the $+2\%$ perturbation is jointly attributed to several correlated families. 
 
 We speculate that, due to the strong co-linearities among the OEORM signatures, even slight optics mismatches introduce additional OEORM components that cannot be fully represented by the nominal model. These incompatible signatures may then be projected onto particular strength signatures within highly correlated families that can partially reproduce the observed OEORM variation. Since small optics mismatches between the machine and the model are unavoidable, the ability of NOECO to identify isolated perturbations in the SIRIUS case appears to be fundamentally limited.
-
+% \vspace{-0.3cm}
 \section{Conclusions}
-An initial assessment of NOECO's applicability to the SIRIUS storage ring has been presented. The calibration method was applied both to fit the machine operational strengths and to benchmark its ability to identify intentionally introduced errors. The strengths fitted to the operational OEORM reproduced the machine chromaticities with reasonable accuracy and showed good agreement with the strength estimates from the control system. The representativeness of the fitted strengths can be further validated by verifying whether iterative nonlinear optics symmetrizations in the machine converge.
+% An initial assessment of NOECO's applicability to the SIRIUS storage ring has been presented. The calibration method was applied both to fit the machine operational strengths and to benchmark its ability to identify intentionally introduced errors. The strengths fitted to the operational OEORM reproduced the machine chromaticities with reasonable accuracy and showed good agreement with the strength estimates from the control system. The representativeness of the fitted strengths can be further validated by verifying whether iterative nonlinear optics symmetrizations in the machine converge.
 
-When perturbations were introduced into the operational strengths, NOECO redistributed them across correlated families rather than identifying them individually. Identifiability is also limited in model-based simulations, especially in the presence of optics mismatches. This reflects the quasi-degeneracy intrinsic to the machine sextupole, corrector, and BPM layout, as highlighted by the strong correlations in the SIRIUS OEORM Jacobian. 
+% When perturbations were introduced into the operational strengths, NOECO redistributed them across correlated families rather than identifying them individually. Identifiability is also limited in model-based simulations, especially in the presence of optics mismatches. This reflects the quasi-degeneracy intrinsic to the machine sextupole, corrector, and BPM layout, as highlighted by the strong correlations in the SIRIUS OEORM Jacobian. 
 
-Overall, the results indicate that OEORM-based calibration may be feasible at SIRIUS, but its resolving power is fundamentally limited by strong parameter correlations. Mitigating these limitations may require the inclusion of additional observables capable of breaking the degeneracies, or the use of different observables altogether.
+% Overall, the results indicate that OEORM-based calibration may be feasible at SIRIUS, but its resolving power is fundamentally limited by strong parameter correlations. Mitigating these limitations may require the inclusion of additional observables capable of breaking the degeneracies, or the use of different observables altogether.
+An initial assessment of NOECO applicability to the SIRIUS storage ring has been presented. The method was applied both to fit the operational sextupole strengths and to benchmark its ability to identify intentionally introduced perturbations. The fitted strengths reproduced the measured chromaticities with reasonable accuracy and showed good agreement with control system estimates.
 
+When perturbations were introduced into the operational strengths, however, NOECO redistributed them across correlated families rather than identifying them individually. Model-based simulations also showed limited identifiability, particularly in the presence of optics mismatches. This behavior reflects the quasi-degeneracy intrinsic to the SIRIUS sextupole, corrector, and BPM layout, as evidenced by the strong correlations in the OEORM Jacobian.
+
+Overall, the results indicate that OEORM-based calibration may be feasible at SIRIUS, although its resolving power is fundamentally limited by strong parameter correlations. Overcoming these limitations may require additional or alternative observables capable of breaking the degeneracies.
 
 %\begin{thebibliography}{99}   	% Use for  10-99  references
 
@@ -259,17 +259,17 @@ Overall, the results indicate that OEORM-based calibration may be feasible at SI
     % --- additional material -ISSN/ISBN--
     %  ISBN: 978-3-95450-227-1, ISSN: 2673-5490
     
-    \bibitem{PhysRevAccelBeams.26.032803}
-    D. Vilsmeier, R. Singh, M. Bai,
-    \textquotedblleft{Inverse modeling of circular lattices via orbit response measurements in the presence of degeneracy}\textquotedblright,
-    \emph{Phys. Rev. Accel. Beams}, vol. 26, p. 032803, Mar. 2023.
-    \url{doi:10.1103/PhysRevAccelBeams.26.032803}
+    % \bibitem{PhysRevAccelBeams.26.032803}
+    % D. Vilsmeier, R. Singh, M. Bai,
+    % \textquotedblleft{Inverse modeling of circular lattices via orbit response measurements in the presence of degeneracy}\textquotedblright,
+    % \emph{Phys. Rev. Accel. Beams}, vol. 26, p. 032803, Mar. 2023.
+    % \url{doi:10.1103/PhysRevAccelBeams.26.032803}
     
-    \bibitem{huang2019beam}
-    X. Huang,
-    \textquotedblleft{Beam-based Correction and Optimization for Accelerators}\textquotedblright,
-    CRC Press, 2019.
-    ISBN: 9780429784743.
+    % \bibitem{huang2019beam}
+    % X. Huang,
+    % \textquotedblleft{Beam-based Correction and Optimization for Accelerators}\textquotedblright,
+    % CRC Press, 2019.
+    % ISBN: 9780429784743.
     
     \bibitem{vellosomatheus_online_2023}
     M.~M.~S.~Velloso,  M.~B.~Alves, L.~Liu, X.~Huang, X.~R.~Resende and F.~H.~de~Sá,
